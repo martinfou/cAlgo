@@ -15,11 +15,14 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
     public class FiftyPips : Robot
     {
-        [Parameter(DefaultValue = 0.0)]
-        public double Parameter { get; set; }
+        [Parameter(DefaultValue = true)]
+        public bool Parameter { get; set; }
 
-        [Parameter()]
-        public DataSeries Source { get; set; }
+        [Parameter(DefaultValue = 50)]
+        public int takeProfit { get; set; }
+
+        [Parameter(DefaultValue = 50)]
+        public int stopLoss { get; set; }
 
         private bool allowedToTrade = false;
         private int index;
@@ -38,7 +41,7 @@ namespace cAlgo
                 Print("Market Serie high" + MarketSeries.High[index]);
                 Print("Market Serie low" + MarketSeries.Low[index]);
 
-                TradeResult tr = PlaceStopOrder(TradeType.Buy, Symbol, 1000, MarketSeries.High[index], "label1", 50, 50);
+                //TradeResult tr = PlaceStopOrder(TradeType.Buy, Symbol, 1000, MarketSeries.High[index], "label1", 50, 50);
 
             }
 
@@ -49,7 +52,7 @@ namespace cAlgo
             if (allowedToTrade == true)
             {
                 index = MarketSeries.Close.Count - 2;
-                TradeResult tr = PlaceStopOrder(TradeType.Buy, Symbol, 1000, MarketSeries.High[index], "label1", 50, 50);
+                TradeResult tr = PlaceStopOrder(TradeType.Buy, Symbol, 1000, MarketSeries.High[index], "label1", takeProfit, stopLoss);
 
                 allowedToTrade = false;
                 //TradeResult tr = PlaceStopOrder(TradeType.Sell, Symbol, 1000, MarketSeries.High[index], "label1", 50, 50);

@@ -12,7 +12,7 @@ namespace cAlgo
     {
         private ExponentialMovingAverage[] fastEma = new ExponentialMovingAverage[6];
         private ExponentialMovingAverage[] slowEma = new ExponentialMovingAverage[6];
-
+        private StochasticOscillator stochastic;
         protected override void OnStart()
         {
             fastEma[0] = Indicators.ExponentialMovingAverage(MarketSeries.Close, 3);
@@ -29,6 +29,7 @@ namespace cAlgo
             slowEma[4] = Indicators.ExponentialMovingAverage(MarketSeries.Close, 50);
             slowEma[5] = Indicators.ExponentialMovingAverage(MarketSeries.Close, 60);
 
+            stochastic = Indicators.StochasticOscillator(5, 3, 3, MovingAverageType.Exponential);
 
         }
 
@@ -37,7 +38,7 @@ namespace cAlgo
 
             if (isLongSignalDetected() == true && isSignalConfirmed() == true)
             {
-                Print("==> longsignal detected");
+
             }
         }
 
@@ -71,7 +72,12 @@ namespace cAlgo
 
         private bool isSignalConfirmed()
         {
-            return true;
+            if (stochastic.PercentK.LastValue > 80)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

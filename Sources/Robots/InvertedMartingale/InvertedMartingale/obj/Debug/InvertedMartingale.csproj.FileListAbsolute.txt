@@ -1,0 +1,7 @@
+C:\Users\IEUser\Documents\cAlgo\Sources\Robots\InvertedMartingale\InvertedMartingale\bin\Debug\InvertedMartingale.dll
+C:\Users\IEUser\Documents\cAlgo\Sources\Robots\InvertedMartingale\InvertedMartingale\bin\Debug\InvertedMartingale.pdb
+C:\Users\IEUser\Documents\cAlgo\Sources\Robots\InvertedMartingale\InvertedMartingale\bin\Debug\cAlgo.API.dll
+C:\Users\IEUser\Documents\cAlgo\Sources\Robots\InvertedMartingale\InvertedMartingale\bin\Debug\cAlgo.API.xml
+C:\Users\IEUser\Documents\cAlgo\Sources\Robots\InvertedMartingale\InvertedMartingale\obj\Debug\InvertedMartingale.csprojResolveAssemblyReference.cache
+C:\Users\IEUser\Documents\cAlgo\Sources\Robots\InvertedMartingale\InvertedMartingale\obj\Debug\InvertedMartingale.dll
+C:\Users\IEUser\Documents\cAlgo\Sources\Robots\InvertedMartingale\InvertedMartingale\obj\Debug\InvertedMartingale.pdb

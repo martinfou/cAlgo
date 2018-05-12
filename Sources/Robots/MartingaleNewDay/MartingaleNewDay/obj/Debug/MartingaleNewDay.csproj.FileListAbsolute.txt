@@ -1,0 +1,7 @@
+C:\Users\ADMIN\Documents\cAlgo\Sources\Robots\MartingaleNewDay\MartingaleNewDay\bin\Debug\MartingaleNewDay.dll
+C:\Users\ADMIN\Documents\cAlgo\Sources\Robots\MartingaleNewDay\MartingaleNewDay\bin\Debug\MartingaleNewDay.pdb
+C:\Users\ADMIN\Documents\cAlgo\Sources\Robots\MartingaleNewDay\MartingaleNewDay\bin\Debug\cAlgo.API.dll
+C:\Users\ADMIN\Documents\cAlgo\Sources\Robots\MartingaleNewDay\MartingaleNewDay\bin\Debug\cAlgo.API.xml
+C:\Users\ADMIN\Documents\cAlgo\Sources\Robots\MartingaleNewDay\MartingaleNewDay\obj\Debug\MartingaleNewDay.csprojResolveAssemblyReference.cache
+C:\Users\ADMIN\Documents\cAlgo\Sources\Robots\MartingaleNewDay\MartingaleNewDay\obj\Debug\MartingaleNewDay.dll
+C:\Users\ADMIN\Documents\cAlgo\Sources\Robots\MartingaleNewDay\MartingaleNewDay\obj\Debug\MartingaleNewDay.pdb

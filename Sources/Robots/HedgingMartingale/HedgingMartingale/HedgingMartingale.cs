@@ -49,6 +49,7 @@ namespace cAlgo
 
         private void ExecuteOrder(double quantity, TradeType tradeType)
         {
+            Print("The Spread of the symbol is: {0}", Symbol.Spread);
             var volumeInUnits = Symbol.QuantityToVolume(quantity);
             var result = ExecuteMarketOrder(tradeType, Symbol, volumeInUnits, "HedgingMartingale", TakeProfitStopLoss, TakeProfitStopLoss);
 

@@ -27,11 +27,8 @@ namespace cAlgo
         [Parameter("Initial Quantity (Lots)", DefaultValue = 0.01, MinValue = 0.01, Step = 0.01)]
         public double InitialQuantity { get; set; }
 
-        [Parameter("Stop Loss", DefaultValue = 40)]
-        public int StopLoss { get; set; }
-
-        [Parameter("Take Profit", DefaultValue = 40)]
-        public int TakeProfit { get; set; }
+        [Parameter("Take Profit / StopLoss", DefaultValue = 40)]
+        public int TakeProfitStopLoss { get; set; }
 
         [Parameter("Max Loss In Row", DefaultValue = 8)]
         public int MaxLossInRow { get; set; }
@@ -53,7 +50,7 @@ namespace cAlgo
         private void ExecuteOrder(double quantity, TradeType tradeType)
         {
             var volumeInUnits = Symbol.QuantityToVolume(quantity);
-            var result = ExecuteMarketOrder(tradeType, Symbol, volumeInUnits, "HedgingMartingale", StopLoss, TakeProfit);
+            var result = ExecuteMarketOrder(tradeType, Symbol, volumeInUnits, "HedgingMartingale", TakeProfitStopLoss, TakeProfitStopLoss);
 
             if (result.Error == ErrorCode.NoMoney)
                 Stop();

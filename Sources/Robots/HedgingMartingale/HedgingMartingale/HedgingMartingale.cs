@@ -27,6 +27,9 @@ namespace cAlgo
         [Parameter("Initial Quantity (Lots)", DefaultValue = 0.01, MinValue = 0.01, Step = 0.01)]
         public double InitialQuantity { get; set; }
 
+        [Parameter("Restart Initial Quantity (Lots)", DefaultValue = 0.01, MinValue = 0.01, Step = 0.01)]
+        public double RestartInitialQuantity { get; set; }
+
         [Parameter("Take Profit / StopLoss", DefaultValue = 40)]
         public int TakeProfitStopLoss { get; set; }
 
@@ -43,8 +46,8 @@ namespace cAlgo
 
             var position = Positions.Find("HedgingMartingale");
 
-            ExecuteOrder(InitialQuantity, TradeType.Buy);
-            ExecuteOrder(InitialQuantity, TradeType.Sell);
+            ExecuteOrder(RestartInitialQuantity, TradeType.Buy);
+            ExecuteOrder(RestartInitialQuantity, TradeType.Sell);
         }
 
         private void ExecuteOrder(double quantity, TradeType tradeType)

@@ -22,7 +22,7 @@ using cAlgo.Indicators;
 namespace cAlgo
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
-    public class HedgingMartingale : Robot
+    public class SampleMartingalecBot : Robot
     {
         [Parameter("Initial Quantity (Lots)", DefaultValue = 0.01, MinValue = 0.01, Step = 0.01)]
         public double InitialQuantity { get; set; }
@@ -30,31 +30,30 @@ namespace cAlgo
         [Parameter("Restart Initial Quantity (Lots)", DefaultValue = 0.01, MinValue = 0.01, Step = 0.01)]
         public double RestartInitialQuantity { get; set; }
 
-        [Parameter("Take Profit / StopLoss", DefaultValue = 40)]
-        public int TakeProfitStopLoss { get; set; }
+        [Parameter("Stop Loss", DefaultValue = 40)]
+        public int StopLoss { get; set; }
+
+        [Parameter("Take Profit", DefaultValue = 40)]
+        public int TakeProfit { get; set; }
 
         [Parameter("Max Loss In Row", DefaultValue = 7)]
         public int MaxLossInRow { get; set; }
 
+        private int LossInRow = 0;
+
         private Random random = new Random();
-        private int LossInRowLong = 0;
-        private int LossInRowShort = 0;
 
         protected override void OnStart()
         {
             Positions.Closed += OnPositionsClosed;
 
-            var position = Positions.Find("HedgingMartingale");
-
-            ExecuteOrder(RestartInitialQuantity, TradeType.Buy);
-            ExecuteOrder(RestartInitialQuantity, TradeType.Sell);
+            ExecuteOrder(RestartInitialQuantity, GetRandomTradeType());
         }
 
         private void ExecuteOrder(double quantity, TradeType tradeType)
         {
-            Print("The Spread of the symbol is: {0}", Symbol.Spread);
             var volumeInUnits = Symbol.QuantityToVolume(quantity);
-            var result = ExecuteMarketOrder(tradeType, Symbol, volumeInUnits, "HedgingMartingale", TakeProfitStopLoss, TakeProfitStopLoss);
+            var result = ExecuteMarketOrder(tradeType, Symbol, volumeInUnits, "Martingale", StopLoss, TakeProfit);
 
             if (result.Error == ErrorCode.NoMoney)
                 Stop();
@@ -65,36 +64,18 @@ namespace cAlgo
             Print("Closed");
             var position = args.Position;
 
-            if (position.Label != "HedgingMartingale" || position.SymbolCode != Symbol.Code)
+            if (position.Label != "Martingale" || position.SymbolCode != Symbol.Code)
                 return;
 
             if (position.GrossProfit > 0)
             {
-                if (position.TradeType == TradeType.Buy)
-                {
-                    LossInRowLong = 0;
-                }
-
-                else if (position.TradeType == TradeType.Sell)
-                {
-                    LossInRowShort = 0;
-                }
-
-                ExecuteOrder(InitialQuantity, position.TradeType);
+                LossInRow = 0;
+                ExecuteOrder(InitialQuantity, GetRandomTradeType());
             }
             else
             {
-                if (position.TradeType == TradeType.Buy)
-                {
-                    LossInRowLong = LossInRowLong + 1;
-                }
-
-                else if (position.TradeType == TradeType.Sell)
-                {
-                    LossInRowShort = LossInRowShort + 1;
-                }
-
-                if (LossInRowLong > MaxLossInRow || LossInRowShort > MaxLossInRow)
+                LossInRow = LossInRow + 1;
+                if (LossInRow > MaxLossInRow)
                 {
                     ExecuteOrder(InitialQuantity, position.TradeType);
                 }

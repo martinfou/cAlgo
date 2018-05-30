@@ -33,7 +33,7 @@ namespace cAlgo
         [Parameter("Take Profit / StopLoss", DefaultValue = 40)]
         public int TakeProfitStopLoss { get; set; }
 
-        [Parameter("Max Loss In Row", DefaultValue = 8)]
+        [Parameter("Max Loss In Row", DefaultValue = 7)]
         public int MaxLossInRow { get; set; }
 
         private Random random = new Random();

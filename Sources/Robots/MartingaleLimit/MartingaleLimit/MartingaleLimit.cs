@@ -27,11 +27,19 @@ namespace cAlgo
         [Parameter("Initial Quantity (Lots)", DefaultValue = 0.01, MinValue = 0.01, Step = 0.01)]
         public double InitialQuantity { get; set; }
 
+        [Parameter("Restart Initial Quantity (Lots)", DefaultValue = 0.01, MinValue = 0.01, Step = 0.01)]
+        public double RestartInitialQuantity { get; set; }
+
         [Parameter("Stop Loss", DefaultValue = 40)]
         public int StopLoss { get; set; }
 
         [Parameter("Take Profit", DefaultValue = 40)]
         public int TakeProfit { get; set; }
+
+        [Parameter("Max Loss In Row", DefaultValue = 7)]
+        public int MaxLossInRow { get; set; }
+
+        private int LossInRow = 0;
 
         private Random random = new Random();
 
@@ -39,7 +47,7 @@ namespace cAlgo
         {
             Positions.Closed += OnPositionsClosed;
 
-            ExecuteOrder(InitialQuantity, GetRandomTradeType());
+            ExecuteOrder(RestartInitialQuantity, GetRandomTradeType());
         }
 
         private void ExecuteOrder(double quantity, TradeType tradeType)
@@ -61,11 +69,20 @@ namespace cAlgo
 
             if (position.GrossProfit > 0)
             {
+                LossInRow = 0;
                 ExecuteOrder(InitialQuantity, GetRandomTradeType());
             }
             else
             {
-                ExecuteOrder(position.Quantity * 2, position.TradeType);
+                LossInRow = LossInRow + 1;
+                if (LossInRow > MaxLossInRow)
+                {
+                    ExecuteOrder(InitialQuantity, position.TradeType);
+                }
+                else
+                {
+                    ExecuteOrder(position.Quantity * 2, position.TradeType);
+                }
             }
         }
 
